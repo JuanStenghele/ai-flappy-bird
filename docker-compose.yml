@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: python3 main.py
+    volumes:
+      - ./app/:/app
+    restart: on-failure:5

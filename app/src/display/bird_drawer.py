@@ -15,7 +15,8 @@ class BirdDrawer:
     self.fly_anim_tick = 0
     self.img = self.IMGS[0]
 
-  def draw(self, win: pygame.Surface):
+  # Draws the bird
+  def draw(self, win: pygame.Surface) -> None:
     # Flying animation update
     x: int = floor(self.fly_anim_tick / BIRD_ANIM_TRANSITION_TICKS)
     if x == 3:
@@ -24,13 +25,14 @@ class BirdDrawer:
       self.img = self.IMGS[x]
       
     self.fly_anim_tick += 1
-    # Reset amimation
+    # Reset amimation case
     if self.fly_anim_tick == 20:
       self.fly_anim_tick = 0
 
     # If the bird is diving do not move the wings
-    if self.bird.tilt <= -80:
+    if self.bird.tilt <= BIRD_DIVING_ROT:
       self.img = self.IMGS[1]
+      # Move to IMGS[2]
       self.fly_anim_tick = BIRD_ANIM_TRANSITION_TICKS * 2
 
     # Tilt the bird

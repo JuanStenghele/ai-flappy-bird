@@ -4,18 +4,18 @@ from src.images import *
 
 # Represents a bird in the game
 class Bird:
-  def __init__(self, x: float, y: float):
+  def __init__(self, x: float, y: float) -> None:
     self.x = x
     self.y = y
     self.ticks = 0
     self.tilt = 0
 
   # Makes the bird jump
-  def jump(self):
+  def jump(self) -> None:
     self.ticks = 0
 
   # Natural bird movement
-  def move(self):
+  def move(self) -> None:
     self.ticks += 1
 
     # We use a UAM for the movement
@@ -32,5 +32,6 @@ class Bird:
       # Tilt up
       self.tilt = BIRD_MAX_ROT
     else:
+      # Tilt down
       if self.tilt > BIRD_MIN_ROT:
         self.tilt -= BIRD_ROT_SPEED

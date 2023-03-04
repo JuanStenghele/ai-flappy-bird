@@ -2,15 +2,14 @@ import pygame
 
 from src.constants import *
 from src.display.drawer import Drawer
-from src.display.bird_drawer import BirdDrawer
 from src.obj.obj_manager import ObjectManager
 from src.obj.pygame_obj_manager import PygameObjectManager
-from src.obj.bird import Bird
 from src.obj.bird_builder import BirdBuilder
 
 
 # TODO Remove when implementing the AI
 LEFT = 1
+# Game loop
 def run():
   clock = pygame.time.Clock()
 
@@ -35,7 +34,9 @@ def run():
       elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
         bird.jump()
 
+    if not run:
+      break
+
     bird.move()
 
-    if run:
-      drawer.draw_window()
+    drawer.draw()

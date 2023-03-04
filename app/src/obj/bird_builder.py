@@ -9,7 +9,8 @@ class BirdBuilder:
   def __init__(self, obj_manager: ObjectManager, pg_obj_manager: PygameObjectManager) -> None:
     self.obj_manager = obj_manager
     self.pg_obj_manager = pg_obj_manager
-  
+
+  # Build a bird at (x, y)
   def build(self, x: float, y: float) -> Bird:
     bird = Bird(x, y)
     self.obj_manager.add_bird(bird)

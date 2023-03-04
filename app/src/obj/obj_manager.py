@@ -9,8 +9,10 @@ class ObjectManager:
     self.pipes = []
     self.floor = None
 
+  # Stores a bird
   def add_bird(self, bird: Bird) -> None:
     self.birds.append(bird)
 
+  # Returns all birds
   def get_birds(self) -> List[Bird]:
     return self.birds

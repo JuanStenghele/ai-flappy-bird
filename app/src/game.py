@@ -2,20 +2,26 @@ import pygame
 
 from src.constants import *
 from src.display.drawer import Drawer
+from src.display.bird_drawer import BirdDrawer
 from src.obj.obj_manager import ObjectManager
+from src.obj.pygame_obj_manager import PygameObjectManager
 from src.obj.bird import Bird
+from src.obj.bird_builder import BirdBuilder
 
 
-# TODO Remove
+# TODO Remove when implementing the AI
 LEFT = 1
 def run():
   clock = pygame.time.Clock()
 
   # Game setup
   obj_manager = ObjectManager()
-  drawer = Drawer(obj_manager)
-  bird = Bird(WIN_WIDTH / 2, WIN_HEIGHT / 2)
-  obj_manager.add_bird(bird)
+  pg_obj_manager = PygameObjectManager()
+  drawer = Drawer(pg_obj_manager)
+  bird_builder = BirdBuilder(obj_manager, pg_obj_manager)
+
+  # Here we build the birds
+  bird = bird_builder.build(WIN_WIDTH / 4, WIN_HEIGHT / 2)
 
   run = True
   while run:

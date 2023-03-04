@@ -8,6 +8,7 @@ class Bird:
     self.x = x
     self.y = y
     self.ticks = 0
+    self.tilt = 0
 
   # Makes the bird jump
   def jump(self):
@@ -24,4 +25,12 @@ class Bird:
     # If we go down too fast...
     if (displacement >= BIRD_MAX_SPEED_DOWN):
       displacement = BIRD_MAX_SPEED_DOWN
-    self.y = self.y + displacement
+    self.y += displacement
+
+    # Adjust the tilt
+    if displacement < 0:
+      # Tilt up
+      self.tilt = BIRD_MAX_ROT
+    else:
+      if self.tilt > BIRD_MIN_ROT:
+        self.tilt -= BIRD_ROT_SPEED

@@ -16,6 +16,7 @@ PIPE_GAP = 200
 PIPE_VEL = 5
 
 # BASE
+FLOOR = 650  # TODO check this depending on windows
 BASE_VEL = 5
 
 # Bird
@@ -26,6 +27,3 @@ BIRD_MAX_ROT = 30
 BIRD_MIN_ROT = -90
 BIRD_ROT_SPEED = 15
 BIRD_DIVING_ROT = -80
-
-# FLOOR = 1010
-FLOOR = 650  # TODO check this depending on windows

@@ -4,13 +4,11 @@ from src.constants import *
 from src.display.drawer import Drawer
 from src.obj.obj_manager import ObjectManager
 from src.obj.pygame_obj_manager import PygameObjectManager
-from src.builder.bird_builder import BirdBuilder
-from src.builder.pipe_builder import PipeBuilder
-from src.builder.base_builder import BaseBuilder
+from src.builder import Builder
+
 
 # TODO Remove when implementing the AI
 LEFT = 1
-
 
 # Game loop
 def run():
@@ -20,14 +18,12 @@ def run():
     obj_manager = ObjectManager()
     pg_obj_manager = PygameObjectManager()
     drawer = Drawer(pg_obj_manager)
-    bird_builder = BirdBuilder(obj_manager, pg_obj_manager)
-    pipe_builder = PipeBuilder(obj_manager, pg_obj_manager)
-    base_builder = BaseBuilder(obj_manager, pg_obj_manager)
+    builder = Builder(obj_manager, pg_obj_manager)
 
     # Here we build the birds
-    bird = bird_builder.build(WIN_WIDTH / 4, WIN_HEIGHT / 2)
-    pipes = [pipe_builder.build(WIN_WIDTH)]
-    base = base_builder.build(FLOOR)
+    bird = builder.build_bird(WIN_WIDTH / 4, WIN_HEIGHT / 2)
+    pipes = [ builder.build_pipe(WIN_WIDTH) ]
+    base = builder.build_base(FLOOR)
 
     run = True
     while run:
@@ -49,6 +45,6 @@ def run():
         bird.move()
 
         if pipes[-1].passed:
-            pipes.append(pipe_builder.build(WIN_WIDTH))
+            pipes.append(builder.build_pipe(WIN_WIDTH))
 
         drawer.draw()

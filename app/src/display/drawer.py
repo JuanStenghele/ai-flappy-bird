@@ -24,4 +24,8 @@ class Drawer:
     for drawer in bird_drawers:
       drawer.draw(self.win)
 
+    pipes_drawers = self.pg_obj_manager.get_pipes_drawers()
+    for drawer in pipes_drawers:
+      drawer.draw(self.win)
+
     pygame.display.update()

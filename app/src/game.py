@@ -5,6 +5,7 @@ from src.display.drawer import Drawer
 from src.obj.obj_manager import ObjectManager
 from src.obj.pygame_obj_manager import PygameObjectManager
 from src.obj.bird_builder import BirdBuilder
+from src.obj.pipe_builder import PipeBuilder
 
 
 # TODO Remove when implementing the AI
@@ -18,9 +19,11 @@ def run():
   pg_obj_manager = PygameObjectManager()
   drawer = Drawer(pg_obj_manager)
   bird_builder = BirdBuilder(obj_manager, pg_obj_manager)
+  pipe_builder = PipeBuilder(obj_manager, pg_obj_manager)
 
   # Here we build the birds
   bird = bird_builder.build(WIN_WIDTH / 4, WIN_HEIGHT / 2)
+  pipe_builder.build(WIN_WIDTH)
 
   run = True
   while run:

@@ -11,6 +11,10 @@ GAME_NAME = 'Flappy Bird'
 FPS = 30
 GRAVITY = 3
 
+# Pipe
+PIPE_GAP = 200
+PIPE_VEL = 5
+
 # Bird
 BIRD_JUMP_SPEED = -10.5
 BIRD_MAX_SPEED_DOWN = 30.0

@@ -1,5 +1,6 @@
 from typing import List
 from src.obj.bird import Bird
+from src.obj.pipe import Pipe
 
 
 # Manages the storage of every object in the game
@@ -16,3 +17,11 @@ class ObjectManager:
   # Returns all birds
   def get_birds(self) -> List[Bird]:
     return self.birds
+
+  # Stores a pipe
+  def add_pipe(self, pipe: Pipe) -> None:
+    self.pipes.append(pipe)
+
+  # Returns all pipes
+  def get_pipes(self) -> List[Pipe]:
+    return self.pipes

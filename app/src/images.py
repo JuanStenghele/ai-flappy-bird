@@ -4,7 +4,7 @@ import pygame
 from src.constants import *
 
 
-IMAGE_PATH = 'app/res/img'
+IMAGE_PATH = 'res/img'
 
 def load_image(path: str) -> pygame.Surface:
     return pygame.image.load(os.path.join(IMAGE_PATH, path))

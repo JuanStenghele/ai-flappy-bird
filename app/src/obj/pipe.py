@@ -28,7 +28,9 @@ class Pipe:
         self.top = self.height - self.PIPE_TOP.get_height()
         self.bottom = self.height + PIPE_GAP
 
-    def move(self) -> None:
+    def move(self, bird: Bird) -> None:
+        if self.x < bird.x:
+            self.passed = True
         self.x -= PIPE_VEL
 
     def collide(self, bird: Bird) -> bool:

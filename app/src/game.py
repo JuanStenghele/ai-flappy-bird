@@ -26,7 +26,7 @@ def run():
 
     # Here we build the birds
     bird = bird_builder.build(WIN_WIDTH / 4, WIN_HEIGHT / 2)
-    pipe = pipe_builder.build(WIN_WIDTH)
+    pipes = [pipe_builder.build(WIN_WIDTH)]
     base = base_builder.build(FLOOR)
 
     run = True
@@ -44,7 +44,11 @@ def run():
         if not run:
             break
         base.move()
-        pipe.move()
+        for pipe in pipes:
+            pipe.move(bird)
         bird.move()
+
+        if pipes[-1].passed:
+            pipes.append(pipe_builder.build(WIN_WIDTH))
 
         drawer.draw()

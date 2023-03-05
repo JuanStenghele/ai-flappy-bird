@@ -1,8 +1,6 @@
 import pygame
 
-from math import floor
 from src.obj.pipe import Pipe
-from src.images import PIPE_IMG
 from src.constants import *
 
 

@@ -6,40 +6,46 @@ from src.obj.obj_manager import ObjectManager
 from src.obj.pygame_obj_manager import PygameObjectManager
 from src.obj.bird_builder import BirdBuilder
 from src.obj.pipe_builder import PipeBuilder
-
+from src.obj.base_builder import BaseBuilder
 
 # TODO Remove when implementing the AI
 LEFT = 1
+
+
 # Game loop
 def run():
-  clock = pygame.time.Clock()
+    clock = pygame.time.Clock()
 
-  # Game setup
-  obj_manager = ObjectManager()
-  pg_obj_manager = PygameObjectManager()
-  drawer = Drawer(pg_obj_manager)
-  bird_builder = BirdBuilder(obj_manager, pg_obj_manager)
-  pipe_builder = PipeBuilder(obj_manager, pg_obj_manager)
+    # Game setup
+    obj_manager = ObjectManager()
+    pg_obj_manager = PygameObjectManager()
+    drawer = Drawer(pg_obj_manager)
+    bird_builder = BirdBuilder(obj_manager, pg_obj_manager)
+    pipe_builder = PipeBuilder(obj_manager, pg_obj_manager)
+    base_builder = BaseBuilder(obj_manager, pg_obj_manager)
 
-  # Here we build the birds
-  bird = bird_builder.build(WIN_WIDTH / 4, WIN_HEIGHT / 2)
-  pipe_builder.build(WIN_WIDTH)
+    # Here we build the birds
+    bird = bird_builder.build(WIN_WIDTH / 4, WIN_HEIGHT / 2)
+    pipe_builder.build(WIN_WIDTH)
+    base = base_builder.build(FLOOR)
 
-  run = True
-  while run:
-    clock.tick(FPS)
+    run = True
+    while run:
+        clock.tick(FPS)
 
-    for event in pygame.event.get():
-      if event.type == pygame.QUIT:
-        run = False
-        pygame.quit()
-        break
-      elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
-        bird.jump()
+        base.move()
 
-    if not run:
-      break
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+                break
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
+                bird.jump()
 
-    bird.move()
+        if not run:
+            break
 
-    drawer.draw()
+        bird.move()
+
+        drawer.draw()

@@ -7,7 +7,7 @@ from src.constants import *
 IMAGE_PATH = 'res/img'
 
 def load_image(path: str) -> pygame.Surface:
-    return pygame.image.load(os.path.join(IMAGE_PATH, path))
+  return pygame.image.load(os.path.join(IMAGE_PATH, path))
 
 PIPE_IMG = pygame.transform.scale2x(load_image('pipe.png')).convert_alpha()
 BG_IMG = pygame.transform.scale(load_image('bg.png').convert_alpha(), (WIN_WIDTH, WIN_HEIGHT))

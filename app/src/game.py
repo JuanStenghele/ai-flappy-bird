@@ -12,39 +12,40 @@ LEFT = 1
 
 # Game loop
 def run():
-    clock = pygame.time.Clock()
+  clock = pygame.time.Clock()
 
-    # Game setup
-    obj_manager = ObjectManager()
-    pg_obj_manager = PygameObjectManager()
-    drawer = Drawer(pg_obj_manager)
-    builder = Builder(obj_manager, pg_obj_manager)
+  # Game setup
+  obj_manager = ObjectManager()
+  pg_obj_manager = PygameObjectManager()
+  drawer = Drawer(pg_obj_manager)
+  builder = Builder(obj_manager, pg_obj_manager)
 
-    # Here we build the birds
-    bird = builder.build_bird(WIN_WIDTH / 4, WIN_HEIGHT / 2)
-    pipes = [ builder.build_pipe(WIN_WIDTH) ]
-    base = builder.build_base(FLOOR)
+  # Here we build the birds
+  bird = builder.build_bird(WIN_WIDTH / 4, WIN_HEIGHT / 2)
+  pipes = [ builder.build_pipe(WIN_WIDTH) ]
+  base = builder.build_base(FLOOR)
 
-    run = True
-    while run:
-        clock.tick(FPS)
+  run = True
+  while run:
+    clock.tick(FPS)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-                pygame.quit()
-                break
-            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
-                bird.jump()
+    for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+        run = False
+        pygame.quit()
+        break
+      elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
+        bird.jump()
 
-        if not run:
-            break
-        base.move()
-        for pipe in pipes:
-            pipe.move(bird)
-        bird.move()
+    if not run:
+      break
 
-        if pipes[-1].passed:
-            pipes.append(builder.build_pipe(WIN_WIDTH))
+    base.move()
+    for pipe in pipes:
+      pipe.move(bird)
+    bird.move()
 
-        drawer.draw()
+    if pipes[-1].passed:
+      pipes.append(builder.build_pipe(WIN_WIDTH))
+
+    drawer.draw()

@@ -12,23 +12,23 @@ from src.images import *
 
 # Class in charge of drawing all the pygame sprites
 class Drawer:
-    def __init__(self, pg_obj_manager: PygameObjectManager) -> None:
-        self.win = WIN
-        self.pg_obj_manager = pg_obj_manager
+  def __init__(self, pg_obj_manager: PygameObjectManager) -> None:
+    self.win = WIN
+    self.pg_obj_manager = pg_obj_manager
 
-    # Draws every sprite
-    def draw(self) -> None:
-        self.win.blit(BG_IMG, (0, 0))
+  # Draws every sprite
+  def draw(self) -> None:
+    self.win.blit(BG_IMG, (0, 0))
 
-        base_drawer = self.pg_obj_manager.get_base_drawer()
-        base_drawer.draw(self.win)
+    base_drawer = self.pg_obj_manager.get_base_drawer()
+    base_drawer.draw(self.win)
 
-        bird_drawers = self.pg_obj_manager.get_birds_drawers()
-        for drawer in bird_drawers:
-            drawer.draw(self.win)
+    bird_drawers = self.pg_obj_manager.get_birds_drawers()
+    for drawer in bird_drawers:
+      drawer.draw(self.win)
 
-        pipes_drawers = self.pg_obj_manager.get_pipes_drawers()
-        for drawer in pipes_drawers:
-            drawer.draw(self.win)
+    pipes_drawers = self.pg_obj_manager.get_pipes_drawers()
+    for drawer in pipes_drawers:
+      drawer.draw(self.win)
 
-        pygame.display.update()
+    pygame.display.update()

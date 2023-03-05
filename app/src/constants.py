@@ -10,10 +10,11 @@ WIN_HEIGHT = 720
 GAME_NAME = 'Flappy Bird'
 FPS = 30
 GRAVITY = 3
+LOSE_FREEZE = 2
 
 # Pipe
 PIPE_GAP = 200
-PIPE_VEL = 5
+PIPE_SPEED = 5
 
 # BASE
 FLOOR = 650  # TODO check this depending on windows

@@ -1,3 +1,5 @@
+import random
+
 from src.obj.bird import Bird
 from src.obj.pipe import Pipe
 from src.obj.base import Base
@@ -6,6 +8,7 @@ from src.obj.pygame_obj_manager import PygameObjectManager
 from src.display.bird_drawer import BirdDrawer
 from src.display.pipe_drawer import PipeDrawer
 from src.display.base_drawer import BaseDrawer
+from src.constants import *
 
 
 # Class in charge of building game objects
@@ -20,11 +23,12 @@ class Builder:
     self.obj_manager.add_bird(bird)
     drawer = BirdDrawer(bird)
     self.pg_obj_manager.add_bird_drawer(drawer)
-    return bird
+    return bird, drawer
 
   # Build a pipe at x
   def build_pipe(self, x: float) -> Pipe:
-    pipe = Pipe(x)
+    y = random.randrange(PIPE_GAP / 2 + 50, WIN_HEIGHT - 200)
+    pipe = Pipe(x, y)
     self.obj_manager.add_pipe(pipe)
     drawer = PipeDrawer(pipe)
     self.pg_obj_manager.add_pipe_drawer(drawer)

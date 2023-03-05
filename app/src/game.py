@@ -5,6 +5,7 @@ from src.display.drawer import Drawer
 from src.obj.obj_manager import ObjectManager
 from src.obj.pygame_obj_manager import PygameObjectManager
 from src.builder import Builder
+from src.collision import check_bird_collision
 
 
 # TODO Remove when implementing the AI
@@ -21,7 +22,7 @@ def run():
   builder = Builder(obj_manager, pg_obj_manager)
 
   # Here we build the birds
-  bird = builder.build_bird(WIN_WIDTH / 4, WIN_HEIGHT / 2)
+  bird, bird_drawer = builder.build_bird(WIN_WIDTH / 4, WIN_HEIGHT / 2)
   pipes = [ builder.build_pipe(WIN_WIDTH) ]
   base = builder.build_base(FLOOR)
 
@@ -44,6 +45,12 @@ def run():
     for pipe in pipes:
       pipe.move(bird)
     bird.move()
+
+    if check_bird_collision(bird_drawer, pg_obj_manager):
+      pygame.time.wait(LOSE_FREEZE * 1000)
+      run = False
+      pygame.quit()
+      break
 
     if pipes[-1].passed:
       pipes.append(builder.build_pipe(WIN_WIDTH))

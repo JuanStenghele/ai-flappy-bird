@@ -18,7 +18,7 @@ PIPE_SPEED = 5
 
 # BASE
 FLOOR = 650  # TODO check this depending on windows
-BASE_VEL = 5
+BASE_SPEED = 96
 
 # Bird
 BIRD_JUMP_SPEED = -10.5

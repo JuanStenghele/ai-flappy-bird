@@ -1,20 +1,15 @@
-from src.images import *
 from src.constants import *
 
 
+# Class that represents a base (or floor) in the game
 class Base:
   def __init__(self, y: float) -> None:
-    self.img = BASE_IMG
     self.y = y
-    self.x1 = 0
-    self.x2 = self.img.get_width()
-    self.width = self.img.get_width()
+    self.x = WIN_WIDTH
 
+  # Moves the base horizontally
   def move(self) -> None:
-    self.x1 -= BASE_VEL
-    self.x2 -= BASE_VEL
-    if self.x1 + self.width < 0:
-      self.x1 = self.x2 + self.width
+    self.x -= WIN_WIDTH / BASE_SPEED
 
-    if self.x2 + self.width < 0:
-      self.x2 = self.x1 + self.width
+    if self.x <= 0:
+      self.x = WIN_WIDTH

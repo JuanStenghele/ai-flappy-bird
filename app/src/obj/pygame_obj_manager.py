@@ -2,6 +2,7 @@ from typing import List
 from src.display.bird_drawer import BirdDrawer
 from src.display.pipe_drawer import PipeDrawer
 from src.display.base_drawer import BaseDrawer
+from src.display.statistics_drawer import StatisticsDrawer
 
 
 # Manages the storage of every pygame related object in the game
@@ -10,6 +11,7 @@ class PygameObjectManager:
     self.birds_drawers = []
     self.pipes_drawers = []
     self.base_drawer = None
+    self.statistics_drawer = None
 
   def add_bird_drawer(self, bird_drawer: BirdDrawer) -> None:
     self.birds_drawers.append(bird_drawer)
@@ -28,3 +30,9 @@ class PygameObjectManager:
 
   def get_base_drawer(self) -> BaseDrawer:
     return self.base_drawer
+
+  def set_statistics_drawer(self, statistics_drawer: StatisticsDrawer) -> None:
+    self.statistics_drawer = statistics_drawer
+
+  def get_statistics_drawer(self) -> StatisticsDrawer:
+    return self.statistics_drawer

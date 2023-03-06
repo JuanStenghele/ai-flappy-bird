@@ -31,4 +31,7 @@ class Drawer:
     for drawer in pipes_drawers:
       drawer.draw(self.win)
 
+    statistics_drawer = self.pg_obj_manager.get_statistics_drawer()
+    statistics_drawer.draw(self.win)
+
     pygame.display.update()

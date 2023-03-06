@@ -3,11 +3,13 @@ import random
 from src.obj.bird import Bird
 from src.obj.pipe import Pipe
 from src.obj.base import Base
+from src.obj.statistics import Statistics
 from src.obj.obj_manager import ObjectManager
 from src.obj.pygame_obj_manager import PygameObjectManager
 from src.display.bird_drawer import BirdDrawer
 from src.display.pipe_drawer import PipeDrawer
 from src.display.base_drawer import BaseDrawer
+from src.display.statistics_drawer import StatisticsDrawer
 from src.constants import *
 
 
@@ -41,3 +43,11 @@ class Builder:
     drawer = BaseDrawer(base)
     self.pg_obj_manager.set_base_drawer(drawer)
     return base
+
+  # Build statistics
+  def build_statistics(self) -> Statistics:
+    statistics = Statistics()
+    self.obj_manager.set_statistics(statistics)
+    drawer = StatisticsDrawer(statistics)
+    self.pg_obj_manager.set_statistics_drawer(drawer)
+    return statistics

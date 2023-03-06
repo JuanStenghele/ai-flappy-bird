@@ -1,10 +1,12 @@
+import pygame.font
+
 # Display
 WIN_WIDTH = 480
 WIN_HEIGHT = 720
 
 # Fonts
-# STAT_FONT = pygame.font.SysFont("comicsans", 50)
-# END_FONT = pygame.font.SysFont("comicsans", 70)
+pygame.font.init()
+STAT_FONT = pygame.font.SysFont("comicsans", 30)
 
 # Game
 GAME_NAME = 'Flappy Bird'

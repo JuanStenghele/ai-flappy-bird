@@ -29,6 +29,7 @@ def run():
     bird, bird_drawer = builder.build_bird(WIN_WIDTH / 4, WIN_HEIGHT / 2)
     pipes = [ builder.build_pipe(WIN_WIDTH) ]
     base = builder.build_base(FLOOR)
+    statistics = builder.build_statistics()
 
     run = True
     while run:
@@ -55,6 +56,7 @@ def run():
         break
 
       if pipes[-1].passed:
+        statistics.increase_score()
         pipes.append(builder.build_pipe(WIN_WIDTH))
 
       drawer.draw()

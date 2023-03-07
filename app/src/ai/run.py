@@ -1,6 +1,6 @@
 from src.ai.ai import Ai
 from src.ai.setup import *
-
+from src.game import run
 
 ai = None
 population = None
@@ -11,4 +11,4 @@ def run_simulation():
   ai.run_training(run_game)
 
 def run_game(genomes, config):
-  print("population")
+  run(genomes, config)

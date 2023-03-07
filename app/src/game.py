@@ -1,4 +1,5 @@
 import pygame
+import neat
 
 from src.constants import *
 from src.display.drawer import Drawer
@@ -12,7 +13,7 @@ from src.collision import check_bird_collision
 LEFT = 1
 
 # Game loop
-def run():
+def run(genomes, config):
   def run_game_loop():
     global restart
     restart = False
@@ -30,6 +31,21 @@ def run():
     pipes = [ builder.build_pipe(WIN_WIDTH) ]
     base = builder.build_base(FLOOR)
     statistics = builder.build_statistics()
+
+
+    # start by creating lists holding the genome itself, the
+    # neural network associated with the genome and the
+    # bird object that uses that network to play
+    nets = []
+    birds = []
+    ge = []
+    for genome_id, genome in genomes:
+      genome.fitness = 0  # start with fitness level of 0
+      net = neat.nn.FeedForwardNetwork.create(genome, config)
+      nets.append(net)
+      birds.append(bird)
+      ge.append(genome)
+
 
     run = True
     while run:

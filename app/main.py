@@ -4,5 +4,5 @@ from src.ai.run import *
 
 print('Running AI Flappy Bird')
 run_simulation()
-run()
+#run()
 print('Quiting')

@@ -4,18 +4,21 @@ from src.display.bird_drawer import BirdDrawer
 from src.display.pipe_drawer import PipeDrawer
 from src.display.base_drawer import BaseDrawer
 from src.obj.pygame_obj_manager import PygameObjectManager
+from src.obj.bird import Bird
 
 
 # Methods for detecting collisions in pygame
 
 # Detects any bird collision
-def check_bird_collision(bird: BirdDrawer, obj_manager: PygameObjectManager) -> bool:
+def check_bird_collision(bird: Bird, obj_manager: PygameObjectManager) -> bool:
+  bird_drawer = obj_manager.get_bird_drawer(bird)
+
   collides: bool = False
   for pipe in obj_manager.get_pipes_drawers():
-    if collision_bird_pipe(bird, pipe):
+    if collision_bird_pipe(bird_drawer, pipe):
       collides = True
       break
-  if not collides and collision_bird_base(bird, obj_manager.get_base_drawer()):
+  if not collides and collision_bird_base(bird_drawer, obj_manager.get_base_drawer()):
     collides = True
   return collides
 

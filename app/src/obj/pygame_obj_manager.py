@@ -3,6 +3,7 @@ from src.display.bird_drawer import BirdDrawer
 from src.display.pipe_drawer import PipeDrawer
 from src.display.base_drawer import BaseDrawer
 from src.display.statistics_drawer import StatisticsDrawer
+from src.obj.bird import Bird
 
 
 # Manages the storage of every pygame related object in the game
@@ -36,3 +37,6 @@ class PygameObjectManager:
 
   def get_statistics_drawer(self) -> StatisticsDrawer:
     return self.statistics_drawer
+
+  def get_bird_drawer(self, bird: Bird) -> BirdDrawer:
+    return [drawer for drawer in self.birds_drawers if drawer.bird == bird][0]

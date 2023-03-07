@@ -25,7 +25,7 @@ class Builder:
     self.obj_manager.add_bird(bird)
     drawer = BirdDrawer(bird)
     self.pg_obj_manager.add_bird_drawer(drawer)
-    return bird, drawer
+    return bird
 
   # Build a pipe at x
   def build_pipe(self, x: float) -> Pipe:

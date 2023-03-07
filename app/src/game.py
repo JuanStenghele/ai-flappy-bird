@@ -26,7 +26,7 @@ def run():
     builder = Builder(obj_manager, pg_obj_manager)
 
     # Here we build the birds
-    bird, bird_drawer = builder.build_bird(WIN_WIDTH / 4, WIN_HEIGHT / 2)
+    bird = builder.build_bird(WIN_WIDTH / 4, WIN_HEIGHT / 2)
     pipes = [ builder.build_pipe(WIN_WIDTH) ]
     base = builder.build_base(FLOOR)
     statistics = builder.build_statistics()
@@ -57,7 +57,7 @@ def run():
 
       drawer.draw()
       
-      if check_bird_collision(bird_drawer, pg_obj_manager):
+      if check_bird_collision(bird, pg_obj_manager):
         restart = True
         break
 

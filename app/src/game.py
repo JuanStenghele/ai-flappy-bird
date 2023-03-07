@@ -51,15 +51,15 @@ def run():
         pipe.move(bird)
       bird.move()
 
-      if check_bird_collision(bird_drawer, pg_obj_manager):
-        restart = True
-        break
-
       if pipes[-1].passed:
         statistics.increase_score()
         pipes.append(builder.build_pipe(WIN_WIDTH))
 
       drawer.draw()
+      
+      if check_bird_collision(bird_drawer, pg_obj_manager):
+        restart = True
+        break
 
   run_game_loop()
   while restart:

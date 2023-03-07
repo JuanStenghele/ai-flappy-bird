@@ -1,10 +1,8 @@
 import os, neat
 
-from src.ai.ai import Ai
-
 
 # Returns a configured Ai
-def ai_setup() -> Ai:
+def ai_setup() -> neat.Population:
   local_dir = os.path.dirname(__file__)
   config_file = os.path.join(local_dir, 'ai-config.txt')
 
@@ -19,7 +17,5 @@ def ai_setup() -> Ai:
   # Create the population, which is the top-level object for a NEAT run.
   population: neat.Population = neat.Population(config)
 
-  ai: Ai = Ai(population)
-  ai.add_reporter()
 
-  return ai
+  return population

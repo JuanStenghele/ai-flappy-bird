@@ -1,7 +1,6 @@
 import neat
 
 from src.constants import *
-from src.ai.run import run_game
 
 
 # Encapsulates the NEAT Ai
@@ -17,6 +16,6 @@ class Ai:
     self.population.add_reporter(stats)
 
   # Runs the game to train the birds
-  def run_training(self):
+  def run_training(self, run_game):
     self.winner = self.population.run(run_game, AI_GENERATIONS)
 

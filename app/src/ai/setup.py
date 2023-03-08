@@ -17,5 +17,4 @@ def ai_setup() -> neat.Population:
   # Create the population, which is the top-level object for a NEAT run.
   population: neat.Population = neat.Population(config)
 
-
   return population

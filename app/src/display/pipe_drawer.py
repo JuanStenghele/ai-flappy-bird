@@ -22,3 +22,7 @@ class PipeDrawer:
     win.blit(self.PIPE_TOP, (self.pipe.x, self.top))
     # And bottom
     win.blit(self.PIPE_BOT, (self.pipe.x, self.bot))
+
+  # Returns if the pipe is out of screen or not
+  def is_out_of_screen(self) -> bool:
+    return self.pipe.x + self.PIPE_TOP.get_width() < 0

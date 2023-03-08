@@ -2,13 +2,13 @@ from src.ai.ai import Ai
 from src.ai.setup import *
 from src.game import run
 
-ai = None
-population = None
 def run_simulation():
   population = ai_setup()
-  ai: Ai = Ai(population)
+  global ai
+  ai = Ai(population)
   ai.add_reporter()
-  ai.run_training(run_game)
+  ai.run_training(game_runner)
 
-def run_game(genomes, config):
-  run(genomes, config)
+def game_runner(genomes, config):
+  ai.init_genomes(genomes, config)
+  run(ai)

@@ -1,5 +1,3 @@
-import random
-
 from src.images import *
 from src.constants import *
 from src.obj.bird import Bird
@@ -10,10 +8,6 @@ class Pipe:
   def __init__(self, x: float, y: float) -> None:
     self.x = x
     self.y = y
-
-    # Where the top and bottom of the pipe is
-    self.top = 0
-    self.bottom = 0
 
     self.passed = False
 

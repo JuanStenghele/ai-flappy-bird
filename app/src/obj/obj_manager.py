@@ -16,6 +16,10 @@ class ObjectManager:
   def add_bird(self, bird: Bird) -> None:
     self.birds.append(bird)
 
+  # Deletes a bird
+  def delete_bird(self, bird: Bird) -> None:
+    self.birds.remove(bird)
+
   # Returns all birds
   def get_birds(self) -> List[Bird]:
     return self.birds
@@ -23,6 +27,10 @@ class ObjectManager:
   # Stores a pipe
   def add_pipe(self, pipe: Pipe) -> None:
     self.pipes.append(pipe)
+
+  # Deletes a pipe
+  def delete_pipe(self, pipe: Pipe) -> None:
+    self.pipes.remove(pipe)
 
   # Returns all pipes
   def get_pipes(self) -> List[Pipe]:

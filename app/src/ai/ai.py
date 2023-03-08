@@ -14,7 +14,7 @@ class IntelligentBird:
     self.net = net
 
   def jump(self, next_pipe_top: float, next_pipe_bot: float) -> None:
-    output = self.net.activate((self.bird.y, next_pipe_top, next_pipe_bot))
+    output = self.net.activate((self.bird.y, abs(self.bird.y - next_pipe_top), abs(self.bird.y - next_pipe_bot)))
     if output[0] > AI_JUMP_TRIGGER:
       self.bird.jump()
 

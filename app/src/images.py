@@ -13,3 +13,6 @@ PIPE_IMG = pygame.transform.scale2x(load_image('pipe.png')).convert_alpha()
 BG_IMG = pygame.transform.scale(load_image('bg.png').convert_alpha(), (WIN_WIDTH, WIN_HEIGHT))
 BIRD_IMGS = [pygame.transform.scale2x(load_image(f'bird{str(x)}.png')) for x in range(1,4)]
 BASE_IMG = pygame.transform.scale2x(load_image('base.png').convert_alpha())
+
+PIPE_BOT = PIPE_IMG
+PIPE_TOP = pygame.transform.flip(PIPE_IMG, False, True)

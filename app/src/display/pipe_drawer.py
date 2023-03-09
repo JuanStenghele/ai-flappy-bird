@@ -1,14 +1,14 @@
 import pygame
 
 from src.obj.pipe import Pipe
-from src.images import PIPE_IMG
+from src.images import PIPE_TOP, PIPE_BOT
 from src.constants import *
 
 
 # Class in charge of drawing a pipe
 class PipeDrawer:
-  PIPE_TOP = pygame.transform.flip(PIPE_IMG, False, True)
-  PIPE_BOT = PIPE_IMG
+  PIPE_TOP = PIPE_TOP
+  PIPE_BOT = PIPE_BOT
 
   def __init__(self, pipe: Pipe) -> None:
     self.pipe = pipe

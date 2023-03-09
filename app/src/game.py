@@ -11,8 +11,6 @@ from src.collision import check_bird_collision
 from src.ai.ai import Ai, IntelligentBird
 
 
-LEFT = 1
-
 # Game loop
 def run(ai: Ai):
   clock = pygame.time.Clock()
@@ -41,6 +39,9 @@ def run(ai: Ai):
         run = False
         pygame.quit()
         break
+      elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        run = False
+        break
 
     if not run:
       break
@@ -55,15 +56,21 @@ def run(ai: Ai):
         break
     next_pipe_drawer = pg_obj_manager.get_pipe_drawer(next_pipe)
     for bird in birds:
-      bird.jump(next_pipe_drawer.top, next_pipe_drawer.bot)
+      bird_drawer = pg_obj_manager.get_bird_drawer(bird.get_game_bird())
+      # Bird movement
       bird.move()
+      bird.jump(bird_drawer.get_mask_center_y(), next_pipe_drawer.top, next_pipe_drawer.bot)
 
-    # Perform the movements
+    # Base movement
     base.move()
+
+    # Pipe movement
     pipe_rem = []
     for pipe in pipes:
-      pipe.move(bird.get_game_bird())
-      if pg_obj_manager.get_pipe_drawer(pipe).is_out_of_screen():
+      pipe.move()
+      pipe_drawer = pg_obj_manager.get_pipe_drawer(pipe)
+      pipe_drawer.update_passed()
+      if pipe_drawer.is_out_of_screen():
         pipe_rem.append(pipe)
     for pipe in pipe_rem:
       remover.delete_pipe(pipe)

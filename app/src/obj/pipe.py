@@ -12,8 +12,5 @@ class Pipe:
     self.passed = False
 
   # Moves the pipe and updates the passed attribute
-  def move(self, bird: Bird) -> None:
-    if self.x < bird.x:
-      self.passed = True
-
+  def move(self) -> None:
     self.x -= PIPE_SPEED

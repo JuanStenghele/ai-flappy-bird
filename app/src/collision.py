@@ -20,6 +20,8 @@ def check_bird_collision(bird: Bird, obj_manager: PygameObjectManager) -> bool:
       break
   if not collides and collision_bird_base(bird_drawer, obj_manager.get_base_drawer()):
     collides = True
+  if not collides and bird.y < -bird_drawer.img.get_height():
+    collides = True
   return collides
 
 # Detects a collision between a bird and a pipe
@@ -30,7 +32,7 @@ def collision_bird_pipe(bird_drawer: BirdDrawer, pipe_drawer: PipeDrawer) -> boo
   bot_pipe_mask = pygame.mask.from_surface(pipe_drawer.PIPE_BOT)
 
   # Now we get the offsets between the pipe and the bird
-  top_offset = (pipe_drawer.pipe.x - bird_drawer.bird.x, pipe_drawer.top - round(bird_drawer.bird.y))
+  top_offset = (pipe_drawer.pipe.x - bird_drawer.bird.x, pipe_drawer.top - pipe_drawer.PIPE_TOP.get_height() - round(bird_drawer.bird.y))
   bot_offset = (pipe_drawer.pipe.x - bird_drawer.bird.x, pipe_drawer.bot - round(bird_drawer.bird.y))
 
   # Finally we get the overlapping points

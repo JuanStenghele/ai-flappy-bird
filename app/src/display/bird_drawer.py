@@ -41,3 +41,7 @@ class BirdDrawer:
 
     # Draw the bird
     win.blit(rotated_image, new_rect.topleft)
+
+  # Returns the y coord of the mask center
+  def get_mask_center_y(self) -> float:
+    return self.bird.y + self.img.get_height() / 2

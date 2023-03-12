@@ -1,12 +1,6 @@
-import pygame.font
-
 # Display
 WIN_WIDTH = 480
 WIN_HEIGHT = 720
-
-# Fonts
-pygame.font.init()
-STAT_FONT = pygame.font.SysFont("comicsans", 30)
 
 # Game
 GAME_NAME = 'Flappy Bird'
@@ -43,3 +37,7 @@ AI_SCORE_REWARD = 10
 # Optimization
 BIRD_PIPE_COLLISION_TRIGGER = 100
 BIRD_BASE_COLLISION_TRIGGER = 50
+
+# Colors
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)

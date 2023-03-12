@@ -1,4 +1,4 @@
-from src.images import *
+from src.display.images import *
 from src.constants import *
 from src.obj.bird import Bird
 

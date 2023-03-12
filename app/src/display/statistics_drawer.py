@@ -1,7 +1,6 @@
-import pygame
-
 from src.obj.statistics import Statistics
-from src.constants import *
+from src.display.fonts import *
+import ext.ptext as ptext
 
 
 
@@ -10,7 +9,15 @@ class StatisticsDrawer:
       self.statistics = statistics
 
   # Draws the score
-  def draw(self, win: pygame.Surface) -> None:
-    score_label = STAT_FONT.render("Score: " + str(self.statistics.score),1,(255,255,255))
-    win.blit(score_label, (WIN_WIDTH - score_label.get_width() - 15, 10))
-
+  def draw(self) -> None:
+    ptext.draw(
+      str(self.statistics.score), 
+      center=ORIGINAL_FONT_CENTER,
+      fontname=ORIGINAL_FONT_PATH,
+      fontsize=ORIGINAL_FONT_SIZE,
+      owidth=ORIGINAL_FONT_OUTLINE_WIDTH, 
+      ocolor=BLACK,
+      shadow=ORIGINAL_FONT_SHADOW, 
+      scolor=BLACK,
+      color=WHITE
+    )

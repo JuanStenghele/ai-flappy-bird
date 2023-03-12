@@ -1,7 +1,7 @@
 import pygame
 
 from src.obj.base import Base
-from src.images import BASE_IMG
+from src.display.images import BASE_IMG
 from src.constants import *
 
 

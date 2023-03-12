@@ -1,5 +1,5 @@
 from src.constants import *
-from src.images import *
+from src.display.images import *
 
 
 # Represents a bird in the game

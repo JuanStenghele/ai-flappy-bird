@@ -5,7 +5,7 @@ from src.display.pipe_drawer import PipeDrawer
 from src.display.base_drawer import BaseDrawer
 from src.obj.pygame_obj_manager import PygameObjectManager
 from src.obj.bird import Bird
-from src.images import PIPE_TOP, PIPE_BOT, BASE_IMG
+from src.display.images import PIPE_TOP, PIPE_BOT, BASE_IMG
 from src.constants import BIRD_PIPE_COLLISION_TRIGGER, BIRD_BASE_COLLISION_TRIGGER
 
 

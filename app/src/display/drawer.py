@@ -7,7 +7,7 @@ WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 pygame.display.set_caption(GAME_NAME)
 
 from src.obj.pygame_obj_manager import PygameObjectManager
-from src.images import *
+from src.display.images import *
 
 
 # Class in charge of drawing all the pygame sprites
@@ -32,6 +32,6 @@ class Drawer:
       drawer.draw(self.win)
 
     statistics_drawer = self.pg_obj_manager.get_statistics_drawer()
-    statistics_drawer.draw(self.win)
+    statistics_drawer.draw()
 
     pygame.display.update()

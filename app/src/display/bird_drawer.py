@@ -2,7 +2,7 @@ import pygame
 
 from math import floor
 from src.obj.bird import Bird
-from src.images import BIRD_IMGS
+from src.display.images import BIRD_IMGS
 from src.constants import *
 
 

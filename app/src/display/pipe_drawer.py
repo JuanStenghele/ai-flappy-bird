@@ -1,7 +1,7 @@
 import pygame
 
 from src.obj.pipe import Pipe
-from src.images import PIPE_TOP, PIPE_BOT
+from src.display.images import PIPE_TOP, PIPE_BOT
 from src.constants import *
 
 

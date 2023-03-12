@@ -2,48 +2,15 @@ import neat
 
 from typing import List
 from src.constants import *
-from src.obj.bird import Bird
 from src.obj.builder import Builder
 from src.file_dal import FileDal
 from src.output import *
 from src.ai.saver import Saver
+from src.ai.intelligent_bird import IntelligentBird
 
-# Class that represents an Ai controlled bird
-class IntelligentBird:
-  def __init__(self, bird: Bird, genome, net: neat.nn.FeedForwardNetwork) -> None:
-    self.bird = bird
-    self.genome = genome
-    self.net = net
-
-  def jump(self, bird_y: float, next_pipe_top: float, next_pipe_bot: float) -> None:
-    output = self.net.activate((bird_y, abs(bird_y - next_pipe_top), abs(bird_y - next_pipe_bot)))
-    if output[0] > AI_JUMP_TRIGGER:
-      self.bird.jump()
-
-  def move(self):
-    self.reward(AI_MOVE_REWARD)
-    self.bird.move()
-
-  def get_game_bird(self):
-    return self.bird
-
-  def reward(self, reward):
-    self.genome.fitness += reward
-
-  def reward_score(self):
-    self.reward(AI_SCORE_REWARD)
-
-  def punish(self, punish):
-    self.genome.fitness -= punish
-
-  def punish_collision(self):
-    self.punish(AI_COLLISION_PUNISHMENT)
 
 GENOME = 'genome'
 NET = 'net'
-
-TRAIN_MODE = 0
-DISPLAY_MODE = 1
 
 # Encapsulates the NEAT Ai
 class Ai:
@@ -53,13 +20,11 @@ class Ai:
     self.winner = None
     self.genome_data = []
     self.birds = []
-    self.mode = TRAIN_MODE
-    self.fileDal = None
+    self.mode = AiTrainMode(self)
 
   # Sets display mode
   def set_display_mode(self, simulation_file: str) -> None:
-    self.mode = DISPLAY_MODE
-    self.fileDal = FileDal(simulation_file)
+    self.mode = AiDisplayMode(self, simulation_file)
 
   # Add a stdout reporter to show progress in the terminal.
   def add_reporter(self):
@@ -69,35 +34,19 @@ class Ai:
 
   # Runs the game to train the birds
   def run(self, game_runner) -> None:
-    if self.mode == TRAIN_MODE:
-      self.winner = self.population.run(game_runner, AI_GENERATIONS)
-      saver = Saver()
-      saver.save(self.winner)
-    elif self.mode == DISPLAY_MODE:
-      genomes = [data[GENOME] for data in self.genome_data]
-      game_runner(genomes, self.config)
-
-  def setup_genome(self, genome, config):
+    self.mode.run(game_runner)
+ 
+  def setup_genome(self, genome):
     data = {}
-    if self.mode == TRAIN_MODE:
-      # Start with fitness level of 0
-      genome.fitness = 0
-    net = neat.nn.FeedForwardNetwork.create(genome, config)
+    self.mode.set_genome_fitness(genome)
+    net = neat.nn.FeedForwardNetwork.create(genome, self.config)
     data[GENOME] = genome
     data[NET] = net
     self.genome_data.append(data)
 
   # Initiate the genomes and nn of the birds
-  def init_genomes(self, genomes, config) -> None:
-    if self.mode == TRAIN_MODE:
-      for _, genome in genomes:
-        self.setup_genome(genome, config)
-    elif self.mode == DISPLAY_MODE:
-      if self.fileDal and self.fileDal.read() == []:
-        raise EMPTY_SIMULATION_FILE_ERR
-
-      for genome in self.fileDal.read():
-        self.setup_genome(genome, config)
+  def init_genomes(self, genomes) -> None:
+    self.mode.init_genomes(genomes)
 
   # Creates an ingame bird for every genome stored
   def init_birds(self, builder: Builder) -> None:
@@ -117,3 +66,58 @@ class Ai:
 
   def delete_all_birds(self) -> None:
     self.birds.clear()
+
+  def get_winner(self):
+    return self.mode.get_winner()
+
+# Ai mode for training
+class AiTrainMode():
+  def __init__(self, parent: Ai) -> None:
+    self.parent = parent
+    self.winner = None
+
+  # Runs the training
+  def run(self, game_runner) -> None:
+    self.winner = self.parent.population.run(game_runner, AI_GENERATIONS)
+    saver = Saver()
+    saver.save(self.winner)    
+
+  # Sets genome fitness
+  def set_genome_fitness(self, genome) -> None:
+    genome.fitness = 0
+
+  # Inits the genomes
+  def init_genomes(self, genomes) -> None:
+    for _, genome in genomes:
+      self.parent.setup_genome(genome)
+
+  # Returns the winner genome
+  def get_winner(self):
+    return self.winner
+
+# Ai mode for displaying a trined genome
+class AiDisplayMode():
+  def __init__(self, parent: Ai, simulation_file: str) -> None:
+    self.parent = parent
+    self.fileDal = FileDal(simulation_file)
+
+  # Runs the display
+  def run(self, game_runner) -> None:
+    genomes = [data[GENOME] for data in self.parent.genome_data]
+    game_runner(genomes, self.parent.config)
+
+  # Sets genome fitness
+  def set_genome_fitness(self, _) -> None:
+    pass
+
+  # Inits the genomes
+  def init_genomes(self, _) -> None:
+    if self.fileDal.read() == []:
+      raise EMPTY_SIMULATION_FILE_ERR
+
+    for genome in self.fileDal.read():
+      self.parent.setup_genome(genome)
+
+  # Returns None
+  def get_winner(self):
+    return None

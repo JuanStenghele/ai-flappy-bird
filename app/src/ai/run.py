@@ -13,8 +13,10 @@ def run_simulation(simulation_file: str = None):
   else:
     ai.add_reporter()
   ai.run(game_runner)
-  print(BEST_GENOME.format(ai.winner))
+  winner = ai.get_winner()
+  if winner is not None:
+    print(BEST_GENOME.format(winner))
 
-def game_runner(genomes, config):
-  ai.init_genomes(genomes, config)
+def game_runner(genomes, _):
+  ai.init_genomes(genomes)
   run(ai)

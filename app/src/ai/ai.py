@@ -3,7 +3,7 @@ import neat
 from typing import List
 from src.constants import *
 from src.obj.bird import Bird
-from src.builder import Builder
+from src.obj.builder import Builder
 from src.file_dal import FileDal
 from src.output import *
 from src.ai.saver import Saver

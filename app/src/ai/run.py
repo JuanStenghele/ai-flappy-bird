@@ -2,10 +2,10 @@ from src.ai.ai import Ai
 from src.ai.setup import *
 from src.game import run
 
-def run_simulation():
+def run_simulation(simulation_file : str = None, train : bool = False):
   population = ai_setup()
   global ai
-  ai = Ai(population)
+  ai = Ai(population, simulation_file, train)
   ai.add_reporter()
   ai.run_training(game_runner)
 

@@ -43,12 +43,13 @@ NET = 'net'
 
 # Encapsulates the NEAT Ai
 class Ai:
-  def __init__(self, population: neat.Population) -> None:
+  def __init__(self, population: neat.Population, simulation_file: str, train: bool = False) -> None:
     self.population = population
     self.winner = None
     self.genome_data = []
     self.birds = []
-    self.fileDal: FileDal = FileDal("winners.bin")
+    self.train = train
+    self.fileDal = FileDal(simulation_file)
 
   # Add a stdout reporter to show progress in the terminal.
   def add_reporter(self):
@@ -58,8 +59,11 @@ class Ai:
 
   # Runs the game to train the birds
   def run_training(self, game_runner) -> None:
+    if not self.train and self.fileDal.read() == []:
+      raise 'Empty file to read from'
     self.winner = self.population.run(game_runner, AI_GENERATIONS)
-    self.fileDal.write(self.winner)
+    if self.train:
+      self.fileDal.write(self.winner)
 
   def setup_genome(self, genome, config, new_genome=True):
     data = {}
@@ -74,12 +78,12 @@ class Ai:
   # Initiate the genomes and nn of the birds
   def init_genomes(self, genomes, config) -> None:
     # Initiate the genomes and nn
-    for _, genome in genomes:
-      self.setup_genome(genome, config)
-    old_winners: List[neat.genome.DefaultGenome] = self.fileDal.read()
-    for genome in old_winners:
-      self.setup_genome(genome, config, False)
-
+    if self.train:
+      for _, genome in genomes:
+        self.setup_genome(genome, config)
+    else:
+      for genome in self.fileDal.read():
+        self.setup_genome(genome, config, False)
 
   # Creates an ingame bird for every genome stored
   def init_birds(self, builder: Builder) -> None:

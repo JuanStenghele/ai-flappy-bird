@@ -15,13 +15,8 @@ class FileDal:
 
     def write(self, new_content):
         if self.read() == []:
-            print(11)
-            content = [self.read(), new_content]
-        else:
-            print(22)
             content = [new_content]
-        print("LEN", len(content))
-        for item in content:
-            print(item)
+        else:
+            content = [self.read(), new_content]
         with open(self.file_path, 'wb') as f:
             pickle.dump(content, f, pickle.HIGHEST_PROTOCOL)

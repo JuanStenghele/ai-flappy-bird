@@ -61,26 +61,25 @@ class Ai:
     self.winner = self.population.run(game_runner, AI_GENERATIONS)
     self.fileDal.write(self.winner)
 
+  def setup_genome(self, genome, config, new_genome=True):
+    data = {}
+    # Start with fitness level of 0
+    if new_genome:
+      genome.fitness = 0
+    net = neat.nn.FeedForwardNetwork.create(genome, config)
+    data[GENOME] = genome
+    data[NET] = net
+    self.genome_data.append(data)
+
   # Initiate the genomes and nn of the birds
   def init_genomes(self, genomes, config) -> None:
     # Initiate the genomes and nn
     for _, genome in genomes:
-      data = {}
-      # Start with fitness level of 0
-      genome.fitness = 0
-      net = neat.nn.FeedForwardNetwork.create(genome, config)
-      data[GENOME] = genome
-      data[NET] = net
-      self.genome_data.append(data)
-
+      self.setup_genome(genome, config)
     old_winners: List[neat.genome.DefaultGenome] = self.fileDal.read()
-    #Remove duplicate code
     for genome in old_winners:
-     data = {}
-     net = neat.nn.FeedForwardNetwork.create(genome, config)
-     data[GENOME] = genome
-     data[NET] = net
-     self.genome_data.append(data)
+      self.setup_genome(genome, config, False)
+
 
   # Creates an ingame bird for every genome stored
   def init_birds(self, builder: Builder) -> None:

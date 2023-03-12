@@ -39,9 +39,6 @@ def run(ai: Ai):
         run = False
         pygame.quit()
         break
-      elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-        run = False
-        break
 
     if not run:
       break

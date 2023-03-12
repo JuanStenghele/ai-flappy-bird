@@ -1,11 +1,12 @@
 import neat
-import json
 
 from typing import List
 from src.constants import *
 from src.obj.bird import Bird
 from src.builder import Builder
 from src.file_dal import FileDal
+from src.output import *
+from src.ai.saver import Saver
 
 # Class that represents an Ai controlled bird
 class IntelligentBird:
@@ -41,14 +42,22 @@ class IntelligentBird:
 GENOME = 'genome'
 NET = 'net'
 
+TRAIN_MODE = 0
+DISPLAY_MODE = 1
+
 # Encapsulates the NEAT Ai
 class Ai:
-  def __init__(self, population: neat.Population, simulation_file: str, train: bool = False) -> None:
+  def __init__(self, population: neat.Population) -> None:
     self.population = population
     self.winner = None
     self.genome_data = []
     self.birds = []
-    self.train = train
+    self.mode = TRAIN_MODE
+    self.fileDal = None
+
+  # Sets display mode
+  def set_display_mode(self, simulation_file: str) -> None:
+    self.mode = DISPLAY_MODE
     self.fileDal = FileDal(simulation_file)
 
   # Add a stdout reporter to show progress in the terminal.
@@ -58,18 +67,18 @@ class Ai:
     self.population.add_reporter(stats)
 
   # Runs the game to train the birds
-  def run_training(self, game_runner) -> None:
-    if not self.train and self.fileDal.read() == []:
-      raise 'Empty file to read from'
-    self.winner = self.population.run(game_runner, AI_GENERATIONS)
-    if self.train:
-      self.fileDal.write(self.winner)
+  def run(self, game_runner) -> None:
+    if self.mode == TRAIN_MODE:
+      self.winner = self.population.run(game_runner, AI_GENERATIONS)
+      saver = Saver()
+      saver.save(self.winner)
+    elif self.mode == DISPLAY_MODE:
+      self.population.run(game_runner, 1)
 
-  def setup_genome(self, genome, config, new_genome=True):
+  def setup_genome(self, genome, config):
     data = {}
     # Start with fitness level of 0
-    if new_genome:
-      genome.fitness = 0
+    genome.fitness = 0
     net = neat.nn.FeedForwardNetwork.create(genome, config)
     data[GENOME] = genome
     data[NET] = net
@@ -77,17 +86,18 @@ class Ai:
 
   # Initiate the genomes and nn of the birds
   def init_genomes(self, genomes, config) -> None:
-    # Initiate the genomes and nn
-    if self.train:
+    if self.mode == TRAIN_MODE:
       for _, genome in genomes:
-        self.setup_genome(genome, config)
-    else:
+        self.setup_genome(genome, config)      
+    elif self.mode == DISPLAY_MODE:
+      if self.fileDal and self.fileDal.read() == []:
+        raise EMPTY_SIMULATION_FILE_ERR
+
       for genome in self.fileDal.read():
-        self.setup_genome(genome, config, False)
+        self.setup_genome(genome, config)
 
   # Creates an ingame bird for every genome stored
   def init_birds(self, builder: Builder) -> None:
-    print(len(self.genome_data))
     for data in self.genome_data:
       self.birds.append(IntelligentBird(builder.build_bird(BIRD_INITIAL_X, BIRD_INITAL_Y), data[GENOME], data[NET]))
   

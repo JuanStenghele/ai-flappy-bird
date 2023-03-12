@@ -17,6 +17,7 @@ class FileDal:
         if self.read() == []:
             content = [new_content]
         else:
-            content = [self.read(), new_content]
+            content = self.read()
+            content.append(new_content)
         with open(self.file_path, 'wb') as f:
             pickle.dump(content, f, pickle.HIGHEST_PROTOCOL)

@@ -75,12 +75,12 @@ class Ai:
 
     old_winners: List[neat.genome.DefaultGenome] = self.fileDal.read()
     #Remove duplicate code
-    #for genome in old_winners:
-    #  data = {}
-    #  net = neat.nn.FeedForwardNetwork.create(genome, config)
-    #  data[GENOME] = genome
-    #  data[NET] = net
-    #  self.genome_data.append(data)
+    for genome in old_winners:
+     data = {}
+     net = neat.nn.FeedForwardNetwork.create(genome, config)
+     data[GENOME] = genome
+     data[NET] = net
+     self.genome_data.append(data)
 
   # Creates an ingame bird for every genome stored
   def init_birds(self, builder: Builder) -> None:

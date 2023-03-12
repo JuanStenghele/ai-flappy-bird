@@ -1,10 +1,11 @@
 import neat
+import json
 
 from typing import List
 from src.constants import *
 from src.obj.bird import Bird
 from src.builder import Builder
-
+from src.file_dal import FileDal
 
 # Class that represents an Ai controlled bird
 class IntelligentBird:
@@ -47,6 +48,7 @@ class Ai:
     self.winner = None
     self.genome_data = []
     self.birds = []
+    self.fileDal: FileDal = FileDal("winners.bin")
 
   # Add a stdout reporter to show progress in the terminal.
   def add_reporter(self):
@@ -57,6 +59,7 @@ class Ai:
   # Runs the game to train the birds
   def run_training(self, game_runner) -> None:
     self.winner = self.population.run(game_runner, AI_GENERATIONS)
+    self.fileDal.write(self.winner)
 
   # Initiate the genomes and nn of the birds
   def init_genomes(self, genomes, config) -> None:
@@ -70,8 +73,18 @@ class Ai:
       data[NET] = net
       self.genome_data.append(data)
 
+    old_winners: List[neat.genome.DefaultGenome] = self.fileDal.read()
+    #Remove duplicate code
+    #for genome in old_winners:
+    #  data = {}
+    #  net = neat.nn.FeedForwardNetwork.create(genome, config)
+    #  data[GENOME] = genome
+    #  data[NET] = net
+    #  self.genome_data.append(data)
+
   # Creates an ingame bird for every genome stored
   def init_birds(self, builder: Builder) -> None:
+    print(len(self.genome_data))
     for data in self.genome_data:
       self.birds.append(IntelligentBird(builder.build_bird(BIRD_INITIAL_X, BIRD_INITAL_Y), data[GENOME], data[NET]))
   

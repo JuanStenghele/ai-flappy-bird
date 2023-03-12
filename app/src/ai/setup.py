@@ -1,8 +1,8 @@
 import os, neat
 
 
-# Returns a configured Ai
-def ai_setup() -> neat.Population:
+# Returns the Ai configuration
+def ai_setup() -> neat.Config:
   local_dir = os.path.dirname(__file__)
   config_file = os.path.join(local_dir, 'ai-config.txt')
 
@@ -14,7 +14,5 @@ def ai_setup() -> neat.Population:
       config_file
     )
 
-  # Create the population, which is the top-level object for a NEAT run.
-  population: neat.Population = neat.Population(config)
+  return config
 
-  return population

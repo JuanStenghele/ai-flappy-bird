@@ -11,6 +11,8 @@ from typing import List
 from src.collision import check_bird_collision
 
 
+LEFT = 1
+
 # Game class
 class FlappyBird:
   def __init__(self, ai: Ai = None) -> None:
@@ -47,7 +49,12 @@ class FlappyBird:
         if event.type == pygame.QUIT:
           run = False
           pygame.quit()
-          break
+          quit()
+        elif event.type == pygame.KEYDOWN:
+          # Skip the generation with the R key pressed
+          if event.key == pygame.K_r:
+            run = False
+            break
 
       if not run:
         break
@@ -69,6 +76,9 @@ class FlappyBird:
 
       # Check collisions between birds and pipes or base
       self.check_collisions()
+
+    self.ai.delete_all_birds()
+
 
   # Moves all the birds
   def move_birds(self):

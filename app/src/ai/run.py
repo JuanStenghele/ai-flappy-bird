@@ -5,9 +5,9 @@ from src.output import *
 
 
 def run_simulation(simulation_file: str = None):
-  population = ai_setup()
+  config = ai_setup()
   global ai
-  ai = Ai(population)
+  ai = Ai(config)
   if simulation_file:
     ai.set_display_mode(simulation_file)
   else:

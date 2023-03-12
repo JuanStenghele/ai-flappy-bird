@@ -47,8 +47,9 @@ DISPLAY_MODE = 1
 
 # Encapsulates the NEAT Ai
 class Ai:
-  def __init__(self, population: neat.Population) -> None:
-    self.population = population
+  def __init__(self, config: neat.Config) -> None:
+    self.config = config
+    self.population = neat.Population(self.config)
     self.winner = None
     self.genome_data = []
     self.birds = []
@@ -73,12 +74,14 @@ class Ai:
       saver = Saver()
       saver.save(self.winner)
     elif self.mode == DISPLAY_MODE:
-      self.population.run(game_runner, 1)
+      genomes = [data[GENOME] for data in self.genome_data]
+      game_runner(genomes, self.config)
 
   def setup_genome(self, genome, config):
     data = {}
-    # Start with fitness level of 0
-    genome.fitness = 0
+    if self.mode == TRAIN_MODE:
+      # Start with fitness level of 0
+      genome.fitness = 0
     net = neat.nn.FeedForwardNetwork.create(genome, config)
     data[GENOME] = genome
     data[NET] = net
@@ -88,7 +91,7 @@ class Ai:
   def init_genomes(self, genomes, config) -> None:
     if self.mode == TRAIN_MODE:
       for _, genome in genomes:
-        self.setup_genome(genome, config)      
+        self.setup_genome(genome, config)
     elif self.mode == DISPLAY_MODE:
       if self.fileDal and self.fileDal.read() == []:
         raise EMPTY_SIMULATION_FILE_ERR
@@ -111,3 +114,6 @@ class Ai:
 
   def delete_bird(self, bird: IntelligentBird) -> None:
     self.birds.remove(bird)
+
+  def delete_all_birds(self) -> None:
+    self.birds.clear()
